@@ -1,0 +1,51 @@
+-Class reorganization
+
+
+---------------------------------------------------------------------------------------
+
+
+
+Map
+  -next_scene
+  -opening_scene
+
+Engine
+ - play
+Scene
+  -enter
+    Carriage Ride
+      -enter
+    Tavern
+      -enter
+    Basement
+      -enter
+    Tunnel
+      -enter
+    Cellar
+      -enter
+    Church
+      -enter
+    Death
+      -enter
+Combat
+  CharcaterClass
+
+  Enemy
+
+  Comabat module
+    -attack
+
+      Conan = Warrior.new();
+      CaveTroll = Troll.new();
+      Conan.attack(CaveTroll);
+      CaveTroll.attack(Conan);
+
+      FWIW, a game designer who has to write code for his own game (a tactical RPG) here, and doing something not too different from what you're advising. My goal was to implement something flexible and easy to maintain regardless of weapon types, ability types, and buff types, but keep in mind this is for a semi-turn-based game.
+
+I keep a bunch of variables to track the current stats of the character (e.g. Strength or Intelligence).
+
+Each weapon and ability a character uses when attacking also has a number of parameters used to define scaling with each of the stats.
+
+When damage is being dealt, we just feed all the current stat values into a function which takes all the scaling modifiers into account to get the final value (which we are then free to modify depending on the ability being used, e.g. ignore target defense or something).
+
+I also keep a stack of buffs/debuffs affecting the character in an array and whenever a buff or debuff is added or removed, recalculate the relevant stats and update the current values (checking other comments, this seems quite similar to what u/seiyria suggests). Incidentally, effects like morale, flanking or formation are also approached as buffs in my game.
